@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Satomi AI Stream"
+version = "1.0.0"
+id = "artifacts/satomi"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19807
+
+[services.development]
+run = "pnpm --filter @workspace/satomi run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/satomi", "run", "build" ]
+publicDir = "artifacts/satomi/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19807"
+BASE_PATH = "/"
